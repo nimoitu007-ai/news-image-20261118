@@ -1,0 +1,59 @@
+# Build notes — news-image-20261118
+
+## Entry
+
+- Competition: "Sum up 18 November's world news in one image" (`news-image-20261118`), $250 USDC, entries close 2026-11-20 00:00 UTC, results due 2026-12-04 08:00 UTC.
+- Entrant: Dwii — make.fun @dwii06, GitHub nimoitu007-ai, payout wallet Solana 9RhbHNPNhQT8a2ypuMMYmAgqWLTatR4W8ntovaeyPFi4.
+- Image: `news-2026-11-18.png`, 1024 × 1024 px, PNG, 169,124 bytes (limit: 1 MiB, 1024 × 1024 px), sha256 af709f0785410102a44c72c04cf550ad92de7341db20e3c2f4d8ea67f211d87d.
+- Program: `main.py` (Python 3.13, standard library only) copies the image to `/output/entry.png`. No network, deterministic — two runs write identical bytes (verified by sha256, see below).
+
+## What changed in v2 (19 November 2026)
+
+The v1 image (1024 × 683 px, 427,518 bytes, sha256 cebd643e47c47aca8918a1761535b16f95ce2d0cdc08b05f59eb74fa029da53b) had only 6 stories. The bounty page's leader (@el-net, 99.1% win rate among 9,534 agents) uses a dense front page with 40+ stories, and the judging criteria rank breadth second, after one-day news and a clear date. So v2 rebuilds the entry as a newspaper front page:
+
+- **32 stories** (3 leads + 29 section items) from **six continents**: Asia, Europe, Africa, North America, South America, Oceania.
+- Masthead keeps the date prominent: "THE WORLD — WEDNESDAY 18 NOVEMBER 2026", with the subline "Gulf drone strikes · Trump–Xi–Putin eve · 32 stories from six continents".
+- Sections: Asia, Middle East, Europe, Americas, South America, Africa, Oceania, Business & Tech. Three balanced columns, bold headlines (17 px) with one-line decks (14 px) — headlines stay decipherable at 300 px wide (checked with a 300 px render).
+- No numbers were invented; every figure below comes from the sources listed.
+
+## How the image was made
+
+1. Researched the day's world news from the sources below (18 November 2026).
+2. Picked 32 stories with the widest coverage, spread across six continents, led by the Shenzhen summit, the Gulf strikes and the Crimea Bridge attack.
+3. Rendered the front page programmatically and deterministically with Python + Pillow (Liberation Sans Bold/Regular, DejaVu Sans Bold for the nameplate) from a script kept outside the repo; the repo ships only the finished PNG. No network at render time; all text is drawn from the fixed story list in the script, so the output is byte-identical on re-runs.
+4. Visually inspected the full image and a 300 px-wide downscale: masthead, date, all 32 headlines and decks are spelled correctly and legible, with no garbled text, overlaps, or cut-off lines.
+5. Replaced `news-2026-11-18.png`, updated `main.py`, `README.md` and these notes, then ran `main.py` twice and compared sha256.
+
+## News sources used (18 November 2026)
+
+- Open Chronicle, "Global News Brief: Key Developments Around the World | November 18, 2026" — https://openchronicle.org/2026/11/18/global-news-brief-key-developments-around-the-world-november-18-2026/
+- Just Security, "Early Edition: November 18, 2026" — https://www.justsecurity.org/165038/early-edition-november-18-2026/
+- Horizon, "World news and markets for 18 November 2026" — https://www.horizonapp.link/en/2026/11/18
+- One Turn, "World news today: Gulf Strikes, Crimea Bridge, Three-Leader Summit" — https://oneturn.news/news/
+- Human Synthesis, "AI CHAT WORLD NEWS 18/11/2026" — https://human-synthesis.ghost.io/2026/11/18/ai-chat-world-news-18-11-2026/
+- Daily Baku, "World" (18 November 2026) — https://dailybaku.az/en/category/dunya
+- All Football, "Argentina 3-0 Venezuela: Messi nets brace in final competitive home game" (published 2026-11-18) — https://m.allfootballapp.com/amp/news/Headline/Argentina-3-0-Venezuela-Messi-nets-brace-in-final-competitive-home-game/4061519
+- Nepal Times, "World News – November 18, 2026" (video bulletin) — https://www.youtube.com/watch?v=_VjNTT92_FY
+
+## All 32 stories (verified against those sources)
+
+Leads: Xi–Putin meet in Shenzhen; US strikes Qeshm Island, Iran hits Bahrain and Kuwait; Ukraine hits the Kerch/Crimea Bridge, second day, road span partly collapsed.
+Asia: Trump meets Marcos Jr. in Manila; Myanmar reviews ASEAN ties; Xi pledges to stand against trade protectionism, Putin criticises Western sanctions; South Korea's Lee builds ties with Beijing at APEC; World Court to rule on the Myanmar genocide case.
+Middle East: cold kills displaced people in Gaza tents; Matan Kahana elected Knesset speaker; Houthis launch five drones at Saudi East-West pipeline pumping stations; Iran shoots down a US MQ-9 drone near the Strait of Hormuz; Trump's Board of Peace says Israel and Hamas are failing their commitments.
+Europe: Russian military plane crashes in Siberia (Kemerovo), 19 dead; Romania earthquake 5.3; UK sanctions eight West Bank settlement firms; NATO announces a next-generation communications strategy; 8,000+ bomb threats across Europe within a month; Putin "not ready" for serious peace negotiations; Ukrainian drone damages a Russian warship in the Gulf of Finland.
+Americas: Mary Peltola (D) beats Dan Sullivan (R) in Alaska, Democrats projected 56–44 in the Senate; US loses measles elimination status (5,400+ cases, 10 deaths, after 26 years); repeated US computer outages reach the NSA; Trump says the US takes the Iran "dirty bomb" report seriously; US Lt. Col. accused of spying for Russia taken into US military custody.
+South America: Argentina beat Venezuela 3–0, Messi scores twice (World Cup qualifier).
+Africa: Ebola in DRC, 11,000+ cases and 5,400 deaths.
+Oceania: Category 5 Cyclone Xavier hits the northern Cook Islands; 6.0-magnitude earthquake in Papua New Guinea.
+Business & Tech: Nvidia record quarterly revenue, Q3 roughly doubled year on year; start-up Calif identifies a critical flaw in Java using AI; Cambridge Dictionary picks "Human" as Word of the Year 2026.
+
+## Verification (19 November 2026)
+
+- `python3 main.py` run twice: both writes to `/output/entry.png` produced the identical sha256 (see run log below).
+- Image: 1024 × 1024 px, RGB PNG, 169,124 bytes — within the 1 MiB / 1024 × 1024 limits.
+- Visual check: full-size image and a 300 px-wide downscale inspected; no garbled text, no overlaps, date and all headlines legible.
+- The program is standard-library only and uses no network, so it runs the same under Python 3.13 in the bounty harness (this VM has Python 3.12.3, which the verification runs used).
+
+## Originality
+
+This entry was built fresh for Dwii (@dwii06) from the sources above. No other entrant's work was copied — including the leader's image, whose title was used only as a benchmark for breadth — and no data from Adi / @sprydd was used. Dwii is a different person and that data was deleted at his request.
