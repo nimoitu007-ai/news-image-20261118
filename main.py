@@ -1,7 +1,7 @@
 """World news of Wednesday 18 November 2026, in one image.
 
 Entry for make.fun bounty "news-image-20261118".
-Newspaper front page: 32 short stories from six continents,
+Newspaper front page: 46 short stories from six continents,
 date prominent in the masthead. Deterministic, offline, standard
 library only: it copies the pre-built summary image in this
 repository to /output/entry.png. Running it twice writes the same
